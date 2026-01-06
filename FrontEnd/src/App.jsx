@@ -26,10 +26,10 @@ function App() {
       setLoading(true);
       setReview("");
 
-      const response = await axios.post("http://localhost:3000/ai/get-review", {
-        code,
-      });
-
+      const response = await axios.post(
+  "https://code-reviewer-backend-taupe.vercel.app/ai/get-review",
+  { code }
+);
       setReview(response.data);
     } catch (error) {
       setReview("❌ Failed to get review. Please try again.");

@@ -1,9 +1,20 @@
 const express = require("express");
 const aiRoutes = require("./routes/ai.routes");
-const cors = require('cors');
+
 
 const app = express();
-app.use(cors());
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://ai-powered-code-reviewer-5a8v.vercel.app"
+    ],
+    methods: ["GET", "POST"],
+  })
+);
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
