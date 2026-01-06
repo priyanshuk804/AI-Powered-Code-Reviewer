@@ -10,6 +10,7 @@ app.use(
       "http://localhost:5173",
       "https://ai-powered-code-reviewer-5a8v.vercel.app",
       "https://code-reviewer-eosin-sigma.vercel.app",
+      "https://code-reviewer-p51kx62i1-priyanshuk804s-projects.vercel.app"
     ],
     methods: ["GET", "POST"],
     allowedHeaders: ["Content-Type"],
