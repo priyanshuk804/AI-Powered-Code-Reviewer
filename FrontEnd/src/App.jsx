@@ -8,24 +8,34 @@ import axios from "axios";
 import "./App.css";
 import "prismjs/components/prism-javascript";
 
-
 function App() {
-  const [count, setCount] = useState(0);
+  
+  const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [code, setCode] = useState(`function sum(){
   return 1 + 1
     }`);
-
-  const [review, setReview] = useState(``);
 
   useEffect(() => {
     prism.highlightAll();
   }, []);
 
   async function reviewCode() {
-    const response = await axios.post("http://localhost:3000/ai/get-review", {
-      code,
-    });
-    setReview(response.data);
+    try {
+      setLoading(true);
+      setReview("");
+
+      const response = await axios.post("http://localhost:3000/ai/get-review", {
+        code,
+      });
+
+      setReview(response.data);
+    } catch (error) {
+      setReview("❌ Failed to get review. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -51,13 +61,20 @@ function App() {
             />
           </div>
 
-          <div onClick={reviewCode} className="review">
-            Review
+          <div
+            onClick={!loading ? reviewCode : undefined}
+            className={`review ${loading ? "disabled" : ""}`}
+          >
+            {loading ? "Reviewing..." : "Review"}
           </div>
         </div>
 
         <div className="right">
-          <Markdown >{review}</Markdown>
+          {loading ? (
+            <p>🔍 Analyzing your code...</p>
+          ) : (
+            <Markdown>{review}</Markdown>
+          )}
         </div>
       </main>
     </>
