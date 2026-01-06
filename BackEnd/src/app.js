@@ -1,17 +1,18 @@
 const express = require("express");
+const cors = require("cors");
 const aiRoutes = require("./routes/ai.routes");
 
-
 const app = express();
-const cors = require("cors");
 
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://ai-powered-code-reviewer-5a8v.vercel.app"
+      "https://ai-powered-code-reviewer-5a8v.vercel.app",
+      "https://code-reviewer-eosin-sigma.vercel.app",
     ],
     methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
   })
 );
 
@@ -22,4 +23,5 @@ app.get("/", (req, res) => {
 });
 
 app.use("/ai", aiRoutes);
+
 module.exports = app;
